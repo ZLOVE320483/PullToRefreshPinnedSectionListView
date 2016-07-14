@@ -15,6 +15,7 @@ import com.zlove.pinned.section.R;
  */
 public class RotateLoadingLayout extends LoadingLayout {
 
+
     static final int ROTATION_ANIMATION_DURATION = 1200;
 
     private final Animation mRotateAnimation;
@@ -26,7 +27,9 @@ public class RotateLoadingLayout extends LoadingLayout {
 
     public RotateLoadingLayout(Context context, PullToRefreshBase.Mode mode, PullToRefreshBase.Orientation scrollDirection, TypedArray attrs) {
         super(context, mode, scrollDirection, attrs);
+
         mRotateDrawableWhilePulling = attrs.getBoolean(R.styleable.PullToRefresh_ptrRotateDrawableWhilePulling, true);
+
         mHeaderImage.setScaleType(ImageView.ScaleType.MATRIX);
         mHeaderImageMatrix = new Matrix();
         mHeaderImage.setImageMatrix(mHeaderImageMatrix);
@@ -39,15 +42,13 @@ public class RotateLoadingLayout extends LoadingLayout {
         mRotateAnimation.setRepeatMode(Animation.RESTART);
     }
 
-    @Override
-    protected void onLoadingDrawableSet(Drawable imageDrawable) {
+    public void onLoadingDrawableSet(Drawable imageDrawable) {
         if (null != imageDrawable) {
             mRotationPivotX = Math.round(imageDrawable.getIntrinsicWidth() / 2f);
             mRotationPivotY = Math.round(imageDrawable.getIntrinsicHeight() / 2f);
         }
     }
 
-    @Override
     protected void onPullImpl(float scaleOfLayout) {
         float angle;
         if (mRotateDrawableWhilePulling) {
@@ -80,16 +81,17 @@ public class RotateLoadingLayout extends LoadingLayout {
 
     @Override
     protected void pullToRefreshImpl() {
-
+        // NO-OP
     }
 
     @Override
     protected void releaseToRefreshImpl() {
-
+        // NO-OP
     }
 
     @Override
     protected int getDefaultDrawableResId() {
         return R.mipmap.default_ptr_rotate;
     }
+
 }
